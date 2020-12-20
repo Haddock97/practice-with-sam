@@ -4,37 +4,59 @@ import java.util.*;
 public class help {
    
     public static void main(String[] args) {
-        String menuChoice = "boop";
+        int menuChoice = 0;
         LinkedList myLinked = new LinkedList();
-        while(!menuChoice.equals("q")) {
+        while(menuChoice != 7) {
                 System.out.println("linked list and binary tree from scratch");
                 System.out.println("1. Append a new number to linked list");
                 System.out.println("2. Print linked list");
-                System.out.println("3. Get node at i");
-                System.out.println("4. Remove last node");
+                System.out.println("3. Get node at index i");
+                System.out.println("4. Remove node at index i");
                 System.out.println("5. Reverse linked list");
-                System.out.println("Type q to quit");
+                System.out.println("6. Insert into index");
+                System.out.println("7. Type 7 to quit");
                 Scanner myScanner = new Scanner(System.in);
-                menuChoice = myScanner.next();
-                if(menuChoice.equals("1")){
-                    System.out.println("Enter");
+                menuChoice = myScanner.nextInt();
+                myScanner.nextLine();
+                
+                if(menuChoice == 1) {
+                    System.out.println("Enter your number to append: ");
                     int dataItem = myScanner.nextInt();
+                    myScanner.nextLine();
                     myLinked.add(dataItem);
+                    myLinked.printAll();
                 }
-                else if(menuChoice.equals("2")) {
-                    
+                else if(menuChoice == 2) {
+                    myLinked.printAll();
                 }
-                else if(menuChoice.equals("3")) {
-
+                else if(menuChoice == 3) {
+                    System.out.println("Enter your index to get data: ");
+                    int index = myScanner.nextInt();
+                    myScanner.nextLine();
+                    myLinked.get(index);
+                    myLinked.printAll();
                 }
-                else if(menuChoice.equals("4")) {
-
+                else if(menuChoice == 4) {
+                    System.out.println("Enter your index to remove node: ");
+                    int index = myScanner.nextInt();
+                    myLinked.remove(index);
+                    myLinked.printAll();
                 }
-                else if(menuChoice.equals("5")) {
-
+                else if(menuChoice == 5) {
+                    myLinked.reverse();
+                    myLinked.printAll();
+                }
+                else if(menuChoice == 6) {
+                    System.out.println("Type the index to insert into");
+                    int index = myScanner.nextInt();
+                    myScanner.nextLine();
+                    System.out.println("Type in data");
+                    int data = myScanner.nextInt();
+                    myLinked.insert(index, data);
+                    myLinked.printAll();
                 }
                 else {
-                    System.out.println("Not an option: Press q to quit.")
+                    System.out.println("Not an option: Press 7 to quit.");
                 }
                 
         }
@@ -53,16 +75,21 @@ class LinkedList {
             // Gets you the node after head
             Node finalNode = head.getNext();
             // While the variable that keeps track of the next node in the chain is not null
-            while (!(finalNode.getNext() == null)) {
+            while (finalNode.getNext() != null) {
                 finalNode = finalNode.getNext();
             }
             // Found the last node in the chain because the nextNode.getNext() is null and the while loop ended
             // Now using the last node in the chain add a new node to the chain creating a new node from the user data
             finalNode.setNext(newNode);
+            
         }
     }
     public void insert(int idx, int data) {
-        
+        Node temp = head;
+        for (int i = 0; i < idx - 1; i++) 
+            temp = temp.getNext();
+        Node insertedNode = new Node(data, temp.getNext());
+        temp.setNext(insertedNode);
     }
     public int get(int idx) {
         Node temp = head;
@@ -71,10 +98,44 @@ class LinkedList {
         }
         return temp.getData();
     }
-    public void remove(int idx) {}
-    public int size() {}
+
+    public void remove(int idx) {
+        Node temp = head;
+        if (idx == 0)
+            head = head.getNext();
+        else {
+            //i = 0 to i = 10 ***** node at i = 10 contains data and next = null
+            //remove i = 10
+            //for loop goes to i = 9
+            //temp = node at i = 9
+            for (int i = 0; i < idx - 1; i++)
+                temp = temp.getNext();
+        }
+        //10 is the last node in the linked list
+        //set i=10   i=9 . i = 10 *************. i = 11 --> null
+        //temp=4->6 5 is gone   temp=4, 5       6th
+        temp.setNext(temp.getNext().getNext());
+    }
+
+    public int size() {
+        int count = 0;
+        Node finalNode = head;
+        while (finalNode != null) {
+            finalNode = finalNode.getNext();
+            count++;
+        }
+        return count;
+    }
+    
     public void reverse() {}
-    public void printAll() {}
+    public void printAll() {
+        Node finalNode = head;
+        int count = 0;
+        while(finalNode != null) {
+            System.out.println("index = " + count + " data = " + finalNode.getData());
+            finalNode = finalNode.getNext()
+        }
+    }
 }
 
 class Node {
