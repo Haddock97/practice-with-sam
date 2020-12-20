@@ -87,6 +87,7 @@ class LinkedList {
             
         }
     }
+
     public void insert(int idx, int data) {
         Node temp = head;
         for (int i = 0; i < idx - 1; i++) 
@@ -94,6 +95,7 @@ class LinkedList {
         Node insertedNode = new Node(data, temp.getNext());
         temp.setNext(insertedNode);
     }
+
     public int get(int idx) {
         Node temp = head;
         for (int i = 0; i < idx; i++) {
@@ -129,8 +131,20 @@ class LinkedList {
         }
         return count;
     }
-    
-    public void reverse() {}
+
+    public void reverse() {
+        Node current = head;
+        Node previous = null;
+        Node next = null;
+        while (current != null) {
+            next = current.getNext();
+            current.setNext(previous);
+            previous = current;
+            current = next;
+        }
+        head = previous;
+    }
+
     public void printAll() {
         Node finalNode = head;
         int count = 0;
