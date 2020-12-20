@@ -7,7 +7,7 @@ public class help {
         int menuChoice = 0;
         LinkedList myLinked = new LinkedList();
         while(menuChoice != 7) {
-                System.out.println("linked list and binary tree from scratch");
+                System.out.println("\nlinked list and binary tree from scratch");
                 System.out.println("1. Append a new number to linked list");
                 System.out.println("2. Print linked list");
                 System.out.println("3. Get node at index i");
@@ -33,8 +33,8 @@ public class help {
                     System.out.println("Enter your index to get data: ");
                     int index = myScanner.nextInt();
                     myScanner.nextLine();
-                    myLinked.get(index);
-                    myLinked.printAll();
+                    int info = myLinked.get(index);
+                    System.out.println("index = " + index + " data = " + info);
                 }
                 else if(menuChoice == 4) {
                     System.out.println("Enter your index to remove node: ");
@@ -55,10 +55,13 @@ public class help {
                     myLinked.insert(index, data);
                     myLinked.printAll();
                 }
-                else {
+                else if(menuChoice == 7) {
+                    System.exit(0);
+                }
+                else
+                {
                     System.out.println("Not an option: Press 7 to quit.");
                 }
-                
         }
     }
 }
@@ -73,7 +76,7 @@ class LinkedList {
             head = newNode;
         else {
             // Gets you the node after head
-            Node finalNode = head.getNext();
+            Node finalNode = head;
             // While the variable that keeps track of the next node in the chain is not null
             while (finalNode.getNext() != null) {
                 finalNode = finalNode.getNext();
@@ -133,7 +136,8 @@ class LinkedList {
         int count = 0;
         while(finalNode != null) {
             System.out.println("index = " + count + " data = " + finalNode.getData());
-            finalNode = finalNode.getNext()
+            finalNode = finalNode.getNext();
+            count++;
         }
     }
 }
